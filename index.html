@@ -5,6 +5,7 @@
         <title>Lanet olası otobüsüm nerede?</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <scriptsrc="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/4.4.0/fxparser.min.js"></script>
+        
         <style>
             :root {
                 color-scheme: dark;
@@ -31,18 +32,15 @@
                 border: 1px solid;
             }
             @media screen and (max-width: 1000px) {
-            body {
-                width: 100%;
-            }
+                body {
+                    width: 100%;
+                }
             }
         </style>
+
     </head>
     <body>
-        <div id="title">
-            Lanet olası otobüsüm nerede?
-            <br>
-            Kaynak: https://github.com/otobusumnerede
-        </div>
+        <div id="title">Lanet olası otobüsüm nerede?<br>Kaynak: https://github.com/otobusumnerede</div>
         <div id="container"></div>
         <div id="info">Durak No: 98</div>
         <div id="error"></div>
@@ -74,9 +72,9 @@
                 
                 const header_cells = ["Hat No", "Plaka", "Hız", "Süre"];
                 header_cells.forEach(function(header_text) {
-                        let header_cell = document.createElement("th");
-                        header_cell.textContent = header_text;
-                        header_row.appendChild(header_cell);
+                    let header_cell = document.createElement("th");
+                    header_cell.textContent = header_text;
+                    header_row.appendChild(header_cell);
                 });
             
                 for (let i = 0; i < bus_list.length; i++) {
@@ -106,9 +104,7 @@
                             row.style.backgroundColor = "gray";
                         }
                     }
-                    else {
-                        continue;
-                    }
+                    else { continue; }
                 }
                 document.getElementById("container").appendChild(table);
             }
@@ -121,5 +117,6 @@
             create_table();
             setInterval(update_table, 30 * 1000);
         </script>
+
     </body>
 </html>
