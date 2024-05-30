@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Lanet olası otobüsüm nerede?</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <scriptsrc="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/4.4.0/fxparser.min.js"></script>
+        <style>
+            :root {
+                color-scheme: dark;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            body {
+                width: 50%;
+                margin: 0 auto;
+            }
+            #title, #container, #info, #error {
+                padding-top: 3rem;
+                margin: 0 auto;
+            }
+            #info {
+                text-align: center;
+            }
+            table {
+                margin: 0 auto;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 1rem;
+                text-align: left;
+                border: 1px solid;
+            }
+            @media screen and (max-width: 1000px) {
+            body {
+                width: 100%;
+            }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="title">
+            Lanet olası otobüsüm nerede?
+            <br>
+            Kaynak: https://github.com/otobusumnerede
+        </div>
+        <div id="container"></div>
+        <div id="info">Durak No: 98</div>
+        <div id="error"></div>
+
+        <script>
+            async function fetch_xml() {
+                const params = "?id=98&t=akilliDurakListe&beklenenDurak=98"
+                const url = "https://ulasim.denizli.bel.tr/SureHesap.ashx" + params;
+                try {
+                    const response = await fetch(url);
+                    const data = await response.arrayBuffer();
+                    const decoder = new TextDecoder("UTF-16");
+                    const text = decoder.decode(data);
+                    const parser = new XMLParser();
+                    const output = parser.parse(text);
+                    return output["OtobusListesi"]["Otobus"];
+                }
+                catch (error) {
+                    document.getElementById("error").innerText = "Failed to fetch and parse XML: " + error;
+                }
+            }
+            
+            async function create_table() {
+                const bus_list = await fetch_xml();
+                
+                const table = document.createElement("table");
+                table.setAttribute("id", "data");
+                const header_row = table.insertRow();
+                
+                const header_cells = ["Hat No", "Plaka", "Hız", "Süre"];
+                header_cells.forEach(function(header_text) {
+                        let header_cell = document.createElement("th");
+                        header_cell.textContent = header_text;
+                        header_row.appendChild(header_cell);
+                });
+            
+                for (let i = 0; i < bus_list.length; i++) {
+                    let bus = bus_list[i];
+            
+                    if (true) {
+                        let row = table.insertRow();
+                        row.insertCell().textContent = bus["hatno"];
+                        row.insertCell().textContent = bus["plaka"];
+                        row.insertCell().textContent = bus["hiz"] + " KM/s";
+                        row.insertCell().textContent = bus["sure"];
+            
+                        let hour = parseInt(bus["sure"].split(":")[0]);
+                        let minute = parseInt(bus["sure"].split(":")[1]);
+            
+                        if (hour < 1 && minute > 20) {
+                            row.style.backgroundColor = "green";
+                        }
+                        if (hour < 1 && minute > 5 && minute < 15) {
+                            row.style.backgroundColor = "orange";
+                        }
+                        if (hour < 1 && minute <= 5) {
+                            row.style.backgroundColor = "red";
+                        }
+                        if (bus["plaka"] == "EnYakinKalkis") {
+                            row.style.opacity = "50%";
+                            row.style.backgroundColor = "gray";
+                        }
+                    }
+                    else {
+                        continue;
+                    }
+                }
+                document.getElementById("container").appendChild(table);
+            }
+            
+            async function update_table() {
+                document.getElementById("container").innerHTML = "";
+                create_table();
+            }
+            
+            create_table();
+            setInterval(update_table, 30 * 1000);
+        </script>
+    </body>
+</html>
