@@ -4,14 +4,31 @@
 }
 
 header {
+    display: flex;
     padding: 0.5rem;
+    align-items: center;
     margin-bottom: 1.5rem;
-    background-color: #1c3d36;
+    background-color: #111111;
+    justify-content: space-between;
+}
+
+header #title, header #source-code {
+    flex: 1;
+
 }
 
 header #title {
-    margin: 0 auto;
     font-size: 25px;
+}
+
+header #source-code {
+    font-size: 15px;
+    text-align: right;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
 }
 
 main {
@@ -25,6 +42,10 @@ table {
     border-collapse: collapse;
 }
 
+th {
+    background-color: #111111;
+}
+
 th, td {
     padding: 1rem;
     text-align: left;
@@ -34,6 +55,7 @@ th, td {
 form select, form input, form button {
     padding: 0.5rem;
     margin: 0.1rem;
+    background-color: #111111;
 }
 
 form select, form input {
@@ -50,7 +72,7 @@ form select, form input {
 
 @media screen and (max-width: 1000px) {
     main {
-        width: 100%;
+        width: auto;
     }
 
     #form-container {
