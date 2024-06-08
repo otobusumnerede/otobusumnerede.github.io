@@ -70,6 +70,10 @@ form select, form input {
     margin-bottom: 1.5rem;
 }
 
+#info span {
+    padding: 0.2rem;
+}
+
 @media screen and (max-width: 1000px) {
     main {
         width: auto;
