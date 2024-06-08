@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/4.4.0/fxparser.min.js" type="text/javascript"></script>
+        <title>Otobüsüm Nerede?</title>
+    </head>
+    <body>
+        <header><div id="title">Otobüsüm Nerede?</div></header>
+        <main>
+            <div id="info"></div>
+            <div id="table-container"></div>
+            <div id="error"></div>
+        </main>
+        <script>
+            let params = new URLSearchParams(window.location.search);
+            let stop_no = params.get("stop_no");
+            let bus_no = params.get("bus_no");
+
+            document.getElementById("info").innerText = "Durak No: " + stop_no;
+
+            setInterval(function() {
+                updateTable(stop_no, bus_no);
+            }, 30 * 1000);
+        </script>
+    </body>
+</html>
