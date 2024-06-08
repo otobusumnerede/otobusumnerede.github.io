@@ -21,6 +21,7 @@
             let bus_no = params.get("bus_no");
 
             document.getElementById("info").innerText = "Durak No: " + stop_no;
+            createTable(stop_no, bus_no);
 
             setInterval(function() {
                 updateTable(stop_no, bus_no);
