@@ -17,11 +17,11 @@ header #title {
 main {
     width: 50%;
     margin: 0 auto;
-    text-align: center;
+    padding: 0.5rem;
 }
 
 table {
-    margin: 0 auto;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -37,21 +37,23 @@ form select, form input, form button {
 }
 
 form select, form input {
-    max-width: 200px;
+    width: 250px;
 }
 
-#info, #error {
-    padding: 0.5rem;
-    text-align: left;
+#form-container {
+    text-align: center;
+}
+
+#info, #table-container #error {
     margin-bottom: 1.5rem;
 }
 
 @media screen and (max-width: 1000px) {
-    main, table {
+    main {
         width: 100%;
     }
 
-    main {
+    #form-container {
         text-align: left;
     }
 }
